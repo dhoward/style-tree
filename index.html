@@ -34,6 +34,8 @@
       };
 
       const allStyles = [];
+      const allStylesObj = {};
+
 
       const createPrefix = (prefix, className) => {
         if(className[0] === "@") { // media query
@@ -75,13 +77,49 @@
         for (var property in styleObj) {
           printStyle("", property, styleObj[property]);
         }
+
+        for(let i = allStyles.length-1; i >=0; i--) {
+          console.log(allStyles[i]);
+        }
       }
+
+
+      const createStyle = (styleObj, obj, property) => {
+
+        const item = obj[property];
+        const klass = new String(property);
+        styleObj[property] = klass;
+
+        for (var prop in item) {
+          if (!item.hasOwnProperty(prop)) {
+            continue;
+          }
+
+          // TODO: skip pseudo classes
+
+          // TODO: parse modifier classes
+
+          if(typeof item[prop] === "object") {
+            createStyle(klass, item[prop], prop);
+          }
+        }
+
+      }
+
+
+      const createStyles = (styleObj) => {
+        for (var property in styleObj) {
+          createStyle(allStylesObj, styleObj, property);
+        }
+
+        console.log(allStylesObj);
+      }
+
+
 
       printStyles(style);
+      createStyles(style);
 
-      for(let i = allStyles.length-1; i >=0; i--) {
-        console.log(allStyles[i]);
-      }
     </script>
   </body>
 
