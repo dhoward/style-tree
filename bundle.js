@@ -54,19 +54,25 @@
 
 	var _css2 = _interopRequireDefault(_css);
 
+	var _util = __webpack_require__(2);
+
+	var _util2 = _interopRequireDefault(_util);
+
 	var allStyles = [];
 	var allStylesObj = {};
 
 	var createPrefix = function createPrefix(prefix, className) {
-	  if (className[0] === "@") {
-	    // media query
+	  if (_util2["default"].isMediaQuery(className)) {
 	    return [(className + " { " + prefix).trimLeft(), "} }"];
 	  }
 
-	  if (className[0] === "$") {
-	    // modifier
+	  if (_util2["default"].isModifier(className)) {
 	    var klass = className.substr(1, className.length - 1);
 	    return [(prefix + "." + klass).trimLeft(), "}"];
+	  }
+
+	  if (_util2["default"].isPseudoSelector(className)) {
+	    return [("" + prefix + className).trimLeft(), "}"];
 	  }
 
 	  return [(prefix + " ." + className).trimLeft(), "}"];
@@ -119,12 +125,16 @@
 	      continue;
 	    }
 
-	    // TODO: skip pseudo classes
-
-	    // TODO: parse modifier classes
+	    if (_util2["default"].isPseudoSelector(prop) || _util2["default"].isMediaQuery(prop)) {
+	      continue;
+	    }
 
 	    if (typeof item[prop] === "object") {
-	      createStyle(klass, item[prop], prop);
+	      if (_util2["default"].isModifier(prop)) {
+	        createStyle(klass, item[prop], prop.substr(1, prop.length - 1));
+	      } else {
+	        createStyle(klass, item[prop], prop);
+	      }
 	    }
 	  }
 	};
@@ -184,6 +194,34 @@
 	};
 
 	exports["default"] = style;
+	module.exports = exports["default"];
+
+/***/ },
+/* 2 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var util = {
+
+	  isMediaQuery: function isMediaQuery(selector) {
+	    return selector[0] === "@";
+	  },
+
+	  isModifier: function isModifier(selector) {
+	    return selector[0] === "$";
+	  },
+
+	  isPseudoSelector: function isPseudoSelector(selector) {
+	    return selector[0] === ":";
+	  }
+
+	};
+
+	exports["default"] = util;
 	module.exports = exports["default"];
 
 /***/ }
