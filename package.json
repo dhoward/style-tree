@@ -1,0 +1,11 @@
+{
+  "name": "",
+  "version": "",
+  "description": "",
+  "license": "MIT",
+  "dependencies": {
+    "babel-core": "*",
+    "babel-loader": "*",
+    "webpack": "*"
+  }
+}
