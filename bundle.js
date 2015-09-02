@@ -59,42 +59,33 @@
 	var _util2 = _interopRequireDefault(_util);
 
 	var allStyles = [];
-	var allStylesObj = {};
 
-	var createPrefix = function createPrefix(prefix, className) {
-	  if (_util2["default"].isMediaQuery(className)) {
-	    return [className.trimLeft() + " { " + prefix, "} }"];
+	var createSelector = function createSelector(prefix, selector) {
+	  if (_util2["default"].isMediaQuery(selector)) {
+	    return [selector.trimLeft() + " { " + prefix, "} }"];
 	  }
 
-	  if (_util2["default"].isModifier(className)) {
-	    var klass = className.substr(1, className.length - 1);
+	  if (_util2["default"].isModifier(selector)) {
+	    var klass = selector.substr(1, selector.length - 1);
 	    return [prefix.trimLeft() + "." + klass, "}"];
 	  }
 
-	  if (_util2["default"].isPseudoSelector(className)) {
-	    return ["" + prefix.trimLeft() + className, "}"];
+	  if (_util2["default"].isPseudoSelector(selector)) {
+	    return ["" + prefix.trimLeft() + selector, "}"];
 	  }
 
-	  return [prefix.trimLeft() + " ." + className, "}"];
+	  return [prefix.trimLeft() + " ." + selector, "}"];
 	};
 
-	var printStyle = function printStyle(pre, className, styleObj) {
-	  var _createPrefix = createPrefix(pre, className);
+	var renderStyle = function renderStyle(pre, className, styleObj) {
+	  var _createSelector = createSelector(pre, className);
 
-	  var _createPrefix2 = _slicedToArray(_createPrefix, 2);
+	  var _createSelector2 = _slicedToArray(_createSelector, 2);
 
-	  var selector = _createPrefix2[0];
-	  var close = _createPrefix2[1];
+	  var selector = _createSelector2[0];
+	  var close = _createSelector2[1];
 
 	  var open = selector + " {";
-	  // console.log("-----");
-	  // console.log(pre);
-	  // console.log(open);
-	  // console.log(close);
-	  // let styles = `${prefix}`;
-
-	  // console.log("-----------");
-	  // console.log(util.createMarkup(styleObj));
 
 	  var styles = {};
 	  for (var prop in styleObj) {
@@ -103,23 +94,21 @@
 	    }
 
 	    if (typeof styleObj[prop] === "object") {
-	      printStyle(selector, prop, styleObj[prop]);
+	      renderStyle(selector, prop, styleObj[prop]);
 	    } else {
-	      // styles += prop+":"+styleObj[prop]+";";
 	      styles[prop] = styleObj[prop];
 	    }
 	  }
 
 	  var markup = _util2["default"].createMarkup(styles);
 	  var rule = _util2["default"].wrapStyles(open, close, markup);
-	  // styles += `${suffix}`;
 
 	  allStyles.unshift(rule);
 	};
 
-	var printStyles = function printStyles(styleObj) {
+	var renderStyles = function renderStyles(styleObj) {
 	  for (var property in styleObj) {
-	    printStyle("", property, styleObj[property]);
+	    renderStyle("", property, styleObj[property]);
 	  }
 
 	  for (var i = 0; i < allStyles.length; i++) {
@@ -128,39 +117,35 @@
 	};
 
 	var createStyle = function createStyle(styleObj, obj, property) {
-
 	  var item = obj[property];
-	  var klass = new String(property);
-	  styleObj[property] = klass;
+	  var propertyName = _util2["default"].isModifier(property) ? property.substr(1, property.length - 1) : property;
+	  var klass = new String(propertyName);
+	  styleObj[propertyName] = klass;
 
 	  for (var prop in item) {
 	    if (!item.hasOwnProperty(prop)) {
 	      continue;
 	    }
 
-	    if (_util2["default"].isPseudoSelector(prop) || _util2["default"].isMediaQuery(prop)) {
+	    if (typeof item[prop] !== "object" || _util2["default"].isPseudoSelector(prop) || _util2["default"].isMediaQuery(prop)) {
 	      continue;
 	    }
 
-	    if (typeof item[prop] === "object") {
-	      if (_util2["default"].isModifier(prop)) {
-	        createStyle(klass, item[prop], prop.substr(1, prop.length - 1));
-	      } else {
-	        createStyle(klass, item[prop], prop);
-	      }
-	    }
+	    createStyle(klass, item, prop);
 	  }
 	};
 
 	var createStyles = function createStyles(styleObj) {
+	  var allStyles = {};
+
 	  for (var property in styleObj) {
-	    createStyle(allStylesObj, styleObj, property);
+	    createStyle(allStyles, styleObj, property);
 	  }
 
-	  console.log(allStylesObj);
+	  console.log(allStyles);
 	};
 
-	printStyles(_css2["default"]);
+	renderStyles(_css2["default"]);
 	createStyles(_css2["default"]);
 
 /***/ },
@@ -181,7 +166,9 @@
 	      height: "777px",
 
 	      thingInsideIt: {
-	        color: "babyblue"
+	        color: "babyblue",
+	        MozBorderRadius: 3,
+	        transition: "all 2s"
 	      }
 	    },
 
@@ -192,6 +179,10 @@
 	    secondClass: {
 	      color: "red",
 	      textAlign: "center",
+
+	      insideSecondClass: {
+	        background: "green"
+	      },
 
 	      "@media (max-width: 300px)": {
 	        padding: 10,
