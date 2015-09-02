@@ -3,10 +3,17 @@
   "version": "",
   "description": "",
   "license": "MIT",
+  "scripts": {
+    "test": "mocha --compilers js:babel/register"
+  },
   "dependencies": {
     "babel-core": "*",
     "babel-loader": "*",
     "react": ">=0.11.0",
     "webpack": "*"
+  },
+  "devDependencies": {
+    "babel": "^5.8.23",
+    "chai": "*"
   }
 }

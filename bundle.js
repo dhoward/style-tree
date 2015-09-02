@@ -46,6 +46,10 @@
 
 	"use strict";
 
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
 	var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; })();
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -57,8 +61,6 @@
 	var _util = __webpack_require__(2);
 
 	var _util2 = _interopRequireDefault(_util);
-
-	var allStyles = [];
 
 	var createSelector = function createSelector(prefix, selector) {
 	  if (_util2["default"].isMediaQuery(selector)) {
@@ -74,10 +76,14 @@
 	    return ["" + prefix.trimLeft() + selector, "}"];
 	  }
 
-	  return [prefix.trimLeft() + " ." + selector, "}"];
+	  if (prefix) {
+	    return [prefix.trimLeft() + " ." + selector, "}"];
+	  }
+
+	  return ["." + selector, "}"];
 	};
 
-	var renderStyle = function renderStyle(pre, className, styleObj) {
+	var renderStyle = function renderStyle(array, pre, className, styleObj) {
 	  var _createSelector = createSelector(pre, className);
 
 	  var _createSelector2 = _slicedToArray(_createSelector, 2);
@@ -94,7 +100,7 @@
 	    }
 
 	    if (typeof styleObj[prop] === "object") {
-	      renderStyle(selector, prop, styleObj[prop]);
+	      renderStyle(array, selector, prop, styleObj[prop]);
 	    } else {
 	      styles[prop] = styleObj[prop];
 	    }
@@ -103,17 +109,17 @@
 	  var markup = _util2["default"].createMarkup(styles);
 	  var rule = _util2["default"].wrapStyles(open, close, markup);
 
-	  allStyles.unshift(rule);
+	  array.unshift(rule);
 	};
 
 	var renderStyles = function renderStyles(styleObj) {
+	  var allStyles = [];
+
 	  for (var property in styleObj) {
-	    renderStyle("", property, styleObj[property]);
+	    renderStyle(allStyles, "", property, styleObj[property]);
 	  }
 
-	  for (var i = 0; i < allStyles.length; i++) {
-	    console.log(allStyles[i]);
-	  }
+	  return allStyles;
 	};
 
 	var createStyle = function createStyle(styleObj, obj, property) {
@@ -142,11 +148,11 @@
 	    createStyle(allStyles, styleObj, property);
 	  }
 
-	  console.log(allStyles);
+	  return allStyles;
 	};
 
-	renderStyles(_css2["default"]);
-	createStyles(_css2["default"]);
+	exports.createStyles = createStyles;
+	exports.renderStyles = renderStyles;
 
 /***/ },
 /* 1 */
