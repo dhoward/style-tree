@@ -6,6 +6,7 @@
   "dependencies": {
     "babel-core": "*",
     "babel-loader": "*",
+    "react": ">=0.11.0",
     "webpack": "*"
   }
 }
