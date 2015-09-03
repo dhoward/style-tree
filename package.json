@@ -9,6 +9,7 @@
   "dependencies": {
     "babel-core": "*",
     "babel-loader": "*",
+    "object-hash": "*",
     "react": ">=0.11.0",
     "webpack": "*"
   },

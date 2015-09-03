@@ -22,20 +22,11 @@ const style = {
       color: "red",
       textAlign: "center",
 
-      // insideSecondClass: {
-      //   background: "green"
-      // },
-
       "@media (max-width: 300px)": {
         padding: 10,
         margin: 20
       }
-    }//,
-
-    // "@media (max-width: 600px)": {
-    //   fontSize: 8,
-    //   fontWeight: "bold"
-    // }
+    }
   }
 };
 

@@ -1,4 +1,5 @@
 var chai = require("chai");
+var Selector = require("../lib/selector");
 var lib = require("../lib/main");
 var css = require("./styles/css");
 var createStyles = lib.createStyles;
@@ -14,24 +15,27 @@ describe('createStyles', function() {
   describe('global classes', function() {
     it('should be children of the style object', function () {
       var style = styles.firstClass;
-      style.should.be.a("string");
-      style.should.equal("firstClass");
+      var isSelector = style instanceof Selector;
+      isSelector.should.be.true;
+      style.readable.should.equal("firstClass");
     });
   });
 
   describe('nested classes', function() {
     it('should be children of their class namespace', function () {
       var style = styles.firstClass.secondClass;
-      style.should.be.a("string");
-      style.should.equal("secondClass");
+      var isSelector = style instanceof Selector;
+      isSelector.should.be.true;
+      style.readable.should.equal("secondClass");
     });
   });
 
   describe('modifier classes', function() {
     it('should be children of their class namespace', function () {
       var style = styles.firstClass.firstClassModifier;
-      style.should.be.a("string");
-      style.should.equal("firstClassModifier");
+      var isSelector = style instanceof Selector;
+      isSelector.should.be.true;
+      style.readable.should.equal("firstClassModifier");
     });
   });
 });
