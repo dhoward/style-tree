@@ -58,10 +58,6 @@
 
 	var _selector2 = _interopRequireDefault(_selector);
 
-	var _css = __webpack_require__(1);
-
-	var _css2 = _interopRequireDefault(_css);
-
 	var _util = __webpack_require__(2);
 
 	var _util2 = _interopRequireDefault(_util);
@@ -161,59 +157,7 @@
 	exports.renderStyles = renderStyles;
 
 /***/ },
-/* 1 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var style = {
-	  firstClass: {
-	    height: 100,
-	    lineHeight: 2,
-	    width: 200,
-
-	    $firstClassModifier: {
-	      height: "777px",
-
-	      thingInsideIt: {
-	        color: "babyblue",
-	        MozBorderRadius: 3,
-	        transition: "all 2s"
-	      }
-	    },
-
-	    ":hover": {
-	      color: "hovercolor"
-	    },
-
-	    secondClass: {
-	      color: "red",
-	      textAlign: "center",
-
-	      insideSecondClass: {
-	        background: "green"
-	      },
-
-	      "@media (max-width: 300px)": {
-	        padding: 10,
-	        margin: 20
-	      }
-	    },
-
-	    "@media (max-width: 600px)": {
-	      fontSize: 8,
-	      fontWeight: "bold"
-	    }
-	  }
-	};
-
-	exports["default"] = style;
-	module.exports = exports["default"];
-
-/***/ },
+/* 1 */,
 /* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
