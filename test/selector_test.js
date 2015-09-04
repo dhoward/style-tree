@@ -27,4 +27,11 @@ describe("Selector", function() {
       selName.should.equal("testSelector");
     });
   });
+
+  describe('andReadable', function() {
+    it("should return the selector's name and hash", function () {
+      var selName = sel.andReadable
+      selName.should.equal("testSelector testHash");
+    });
+  });
 });
