@@ -5,8 +5,6 @@ var classNames = require("./styles/classNames");
 var renderStyles = lib.renderStyles;
 chai.should();
 
-console.log(styles);
-
 var styles = renderStyles(styles);
 
 describe('renderStyles', function() {

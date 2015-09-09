@@ -1,3 +1,3 @@
-import bundle from "../index";
+// import bundle from "../index";
 
-console.log(bundle);
+// console.log(bundle);

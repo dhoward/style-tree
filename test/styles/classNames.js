@@ -1,26 +1,9 @@
-import hash from 'object-hash';
+import hash from 'shorthash';
 
-const firstClass = hash({
-  height: 100,
-  lineHeight: 2,
-  width: 200,
-});
-
-const firstClassModifier = hash({
-  height: "777px"
-});
-
-const thingInsideIt = hash({
-  color: "babyblue",
-  MozBorderRadius: 3,
-  transition: "all 2s"
-});
-
-const secondClass = hash({
-  color: "red",
-  textAlign: "center"
-});
-
+const firstClass = "sLEHb";
+const firstClassModifier = "Z1glYGA";
+const thingInsideIt = "ZRrWwb";
+const secondClass = "ZRrWwb";
 
 export {
   firstClass,
