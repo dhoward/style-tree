@@ -1,4 +1,4 @@
-const style = {
+const styles = {
   firstClass: {
     height: 100,
     lineHeight: 2,
@@ -30,4 +30,20 @@ const style = {
   }
 };
 
-export default style;
+const badStyle = {
+  firstClass: {
+    readable: {}
+  }
+};
+
+const badStyle2 = {
+  firstClass: {
+    andReadable: {}
+  }
+};
+
+export default {
+  styles,
+  badStyle,
+  badStyle2
+};

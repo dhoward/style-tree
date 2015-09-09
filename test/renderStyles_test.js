@@ -1,11 +1,13 @@
 var chai = require("chai");
 var lib = require("../lib/main");
-var css = require("./styles/css");
+var {styles} = require("./styles/css");
 var classNames = require("./styles/classNames");
 var renderStyles = lib.renderStyles;
 chai.should();
 
-var styles = renderStyles(css);
+console.log(styles);
+
+var styles = renderStyles(styles);
 
 describe('renderStyles', function() {
   describe('global classes', function() {

@@ -1,11 +1,11 @@
 var chai = require("chai");
 var Selector = require("../lib/selector");
 var lib = require("../lib/main");
-var css = require("./styles/css");
+var {styles, badStyle, badStyle2} = require("./styles/css");
 var createStyles = lib.createStyles;
 chai.should();
 
-var styles = createStyles(css);
+var styles = createStyles(styles);
 
 describe('createStyles', function() {
   it('should create a style object', function () {
@@ -37,5 +37,18 @@ describe('createStyles', function() {
       isSelector.should.be.true;
       style.readable.should.equal("firstClassModifier");
     });
+  });
+
+  it('should throw an error if a reserved word is used', function () {
+    var badStyleCreator = function() {
+      createStyles(badStyle);
+    };
+
+    var badStyleCreator2 = function() {
+      createStyles(badStyle2);
+    };
+
+    badStyleCreator.should.throw(Error);
+    badStyleCreator2.should.throw(Error);
   });
 });

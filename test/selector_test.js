@@ -1,5 +1,5 @@
 var chai = require("chai");
-var css = require("./styles/css");
+var {styles} = require("./styles/css");
 var classNames = require("./styles/classNames");
 var Selector = require("../lib/selector");
 var sel;
@@ -8,7 +8,7 @@ chai.should();
 describe("Selector", function() {
   describe("constructor", function() {
     before(function(){
-      sel = new Selector({}, "firstClass", css);
+      sel = new Selector({}, "firstClass", styles);
     })
 
     it("should create a Selector object", function () {
