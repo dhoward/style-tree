@@ -12,6 +12,19 @@ describe('createStyles', function() {
     styles.should.be.a("object");
   });
 
+  it('should throw an error if a reserved word is used', function () {
+    var badStyleCreator = function() {
+      createStyles(badStyle);
+    };
+
+    var badStyleCreator2 = function() {
+      createStyles(badStyle2);
+    };
+
+    badStyleCreator.should.throw(Error);
+    badStyleCreator2.should.throw(Error);
+  });
+
   describe('global classes', function() {
     it('should be children of the style object', function () {
       var style = styles.firstClass;
@@ -39,16 +52,22 @@ describe('createStyles', function() {
     });
   });
 
-  it('should throw an error if a reserved word is used', function () {
-    var badStyleCreator = function() {
-      createStyles(badStyle);
-    };
+  describe('subsequent calls to createStyles', function() {
+    before(function() {
+      var styles = createStyles({
+        anotherClass: {
+          height: 100
+        }
+      });
+    });
 
-    var badStyleCreator2 = function() {
-      createStyles(badStyle2);
-    };
-
-    badStyleCreator.should.throw(Error);
-    badStyleCreator2.should.throw(Error);
+    it('should add the new styles to the original style object', function () {
+      var firstClassSelector = styles.firstClass instanceof Selector;
+      var anotherClassSelector = styles.anotherClass instanceof Selector;
+      firstClassSelector.should.be.true;
+      anotherClassSelector.should.be.true;
+    });
   });
 });
+
+
