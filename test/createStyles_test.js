@@ -1,6 +1,6 @@
 var chai = require("chai");
-var Selector = require("../lib/selector");
-var lib = require("../lib/main");
+var Selector = require("../src/selector");
+var lib = require("../src/main");
 var {styles, badStyle, badStyle2} = require("./styles/css");
 var createStyles = lib.createStyles;
 chai.should();

@@ -1,5 +1,5 @@
 var chai = require("chai");
-var lib = require("../lib/main");
+var lib = require("../src/main");
 var {styles} = require("./styles/css");
 var classNames = require("./styles/classNames");
 var renderStyles = lib.renderStyles;

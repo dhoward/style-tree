@@ -1,7 +1,7 @@
 var chai = require("chai");
 var {styles} = require("./styles/css");
 var classNames = require("./styles/classNames");
-var Selector = require("../lib/selector");
+var Selector = require("../src/selector");
 var sel;
 chai.should();
 
