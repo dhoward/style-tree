@@ -10,55 +10,47 @@ var styles = renderStyles(styles);
 describe('renderStyles', function() {
   describe('global classes', function() {
     it('should render correctly', function () {
-      var style = styles[0];
-      style.should.equal(`.${classNames.firstClass} { height:100px;line-height:2;width:200px; }`);
+      styles.should.contain(`.${classNames.firstClass} { height:100px;line-height:2;width:200px; }`);
     });
   });
 
   describe('nested classes', function() {
     it('should render correctly', function () {
-      var style = styles[1];
-      style.should.equal(`.${classNames.firstClass} .${classNames.secondClass} { color:red;text-align:center; }`);
+      styles.should.contain(`.${classNames.firstClass} .${classNames.secondClass} { color:red;text-align:center; }`);
     });
   });
 
   describe('modifier classes', function() {
     it('should render correctly', function () {
-      var style = styles[4];
-      style.should.equal(`.${classNames.firstClass}.${classNames.firstClassModifier} { height:777px; }`);
+      styles.should.contain(`.${classNames.firstClass}.${classNames.firstClassModifier} { height:777px; }`);
     });
   });
 
   describe('pseudo selectors', function() {
     it('should render correctly', function () {
-      var style = styles[3];
-      style.should.equal(`.${classNames.firstClass}:hover { color:hovercolor; }`);
+      styles.should.contain(`.${classNames.firstClass}:hover { color:hovercolor; }`);
     });
   });
 
   describe('media queries', function() {
     it('should render outside any other selectors', function () {
-      var style = styles[2];
-      style.should.equal(`@media (max-width: 300px) { .${classNames.firstClass} .${classNames.secondClass} { padding:10px;margin:20px; } }`);
+      styles.should.contain(`@media (max-width: 300px) { .${classNames.firstClass} .${classNames.secondClass} { padding:10px;margin:20px; } }`);
     });
   });
 
   describe('javascript identifiers', function() {
     it('should be converted to css notation', function () {
-      var style = styles[1];
-      style.should.contain("text-align");
+      styles.should.contain("text-align");
     });
   });
 
   describe('numerical values', function() {
     it('should be converted to pixel values where appropriate', function () {
-      var style = styles[0];
-      style.should.contain("height:100px;");
+      styles.should.contain("height:100px;");
     });
 
     it('should remain numbers where appropriate', function () {
-      var style = styles[0];
-      style.should.contain("line-height:2;");
+      styles.should.contain("line-height:2;");
     });
   });
 });
