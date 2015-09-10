@@ -1,17 +1,19 @@
 {
-  "name": "react-ass",
+  "name": "style-tree",
+  "author": "Daniel Howard",
   "version": "0.1.0",
-  "description": "React stylesheets",
+  "description": "JSON stylesheets",
+  "main": "lib/main.js",
   "scripts": {
+    "compile": "babel -d lib/ src/",
+    "prepublish": "npm run compile",
     "test": "mocha --compilers js:babel/register"
   },
   "dependencies": {
     "babel-core": "*",
     "babel-loader": "*",
-    "object-hash": "*",
     "react": ">=0.11.0",
-    "shorthash": "*",
-    "webpack": "*"
+    "shorthash": "*"
   },
   "devDependencies": {
     "babel": "^5.8.23",
