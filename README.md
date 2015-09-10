@@ -53,6 +53,35 @@ You can nest as far as you want, and access the classes in your html the same as
 <div class={styles.outerClass.innerClass}></div> //<div class="Z1glYGA"></div>
 ```
 
+###Sibling classes (modifiers)
+
+To hoist a class up one level, prefix it with a `$`. This allows you to nest modifiers inside the class they should affect:
+```
+StyleTree.createStyles({
+  someClass: {
+    height: 100,
+    
+    $active: {
+      color: "red"
+    },
+    
+    $inactive: {
+      color: "blue"
+    }
+  }
+};
+```
+Outputs this css:
+```
+.sLEHb { height:100px; }
+.sLEHb.Z1glYGA { color:"red" }
+.sLEHb.ZRrWwbD { color:"blue" }
+```
+In your html, you only need to call the modifier and it will output the base class as well:
+```
+<div class={styles.someClass.active}></div> //<div class="sLEHb Z1glYGA"></div>
+```
+
 ###Pseudo selectors
 ```
 StyleTree.createStyles({
@@ -88,7 +117,7 @@ StyleTree.createStyles({
 ```
 
 ##Utility properties
-For whatever reason, you may want to use the human-readable names you created for your css classes. To do that grab the `readable` property from the class:
+Sometimes you may want to use the original names you created for your css classes. To do that grab the `readable` property from the class:
 ```
 style.someClass.readable // "someClass"
 ```
@@ -96,3 +125,4 @@ or `andReadable` to output both at once:
 ```
 style.someClass.andReadable // "someClass sLEHb"
 ```
+Note that the readable class name will NOT style the element; it is included only to be used as a javascript hook or for some other purpose.
