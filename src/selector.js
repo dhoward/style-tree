@@ -5,12 +5,10 @@ class Selector {
   constructor(parent, property, object) {
     const name = util.isModifier(property) ? property.substr(1, property.length-1) : property;
     const item = object[property];
+    const {styles, children} = this.createStyles(item);
 
     this._name = property;
-    this._styles = {};
-    this._children = [];
-    this._styles = this.createStyles(item);
-    this._hash = util.createClassName(this._styles);
+    this._hash = util.createClassName(styles);
 
     this._isModifier = util.isModifier(property);
     this._isPseudo = util.isPseudoSelector(property);
@@ -19,9 +17,9 @@ class Selector {
     this.readable = name;
     this.andReadable = `${name} ${this._hash}`;
 
-    this.createRule(parent._selector, this._name, this._styles, this._isMediaQuery);
-    this.createChildren();
+    this.createRule(parent._selector, this._name, styles, this._isMediaQuery);
 
+    this._children = this.createChildren(children);
     this._parent = parent;
     parent[name] = this;
   }
@@ -32,7 +30,8 @@ class Selector {
   }
 
   createStyles(item) {
-    let styles = {};
+    const styles = {};
+    const children = [];
 
     for (var prop in item) {
       if (!item.hasOwnProperty(prop)) {
@@ -48,16 +47,14 @@ class Selector {
         continue;
       }
 
-      this._children.push({prop, item});
+      children.push({prop, item});
     }
 
-    return styles;
+    return {styles, children};
   }
 
-  createChildren() {
-    this._children = this._children.map(({prop, item}) => {
-      return new Selector(this, prop, item);
-    });
+  createChildren(children) {
+    return children.map(({prop, item}) => new Selector(this, prop, item));
   }
 
   createRule(parentSelector, name, styles, isMediaQuery) {
