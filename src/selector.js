@@ -5,7 +5,7 @@ class Selector {
   constructor(parent, property, object) {
     const name = util.isModifier(property) ? property.substr(1, property.length-1) : property;
     const item = object[property];
-    const {styles, children} = this.createStyles(item);
+    const {styles, children} = Selector.createStyles(item);
 
     this._name = property;
     this._hash = util.createClassName(styles);
@@ -17,9 +17,9 @@ class Selector {
     this.readable = name;
     this.andReadable = `${name} ${this._hash}`;
 
-    this.createRule(parent._selector, this._name, styles, this._isMediaQuery);
+    this._createRule(parent._selector, this._name, styles, this._isMediaQuery);
 
-    this._children = this.createChildren(children);
+    this._children = this._createChildren(children);
     this._parent = parent;
     parent[name] = this;
   }
@@ -29,7 +29,12 @@ class Selector {
     return `${base}${this._hash}`;
   }
 
-  createStyles(item) {
+  render(allStyles) {
+    allStyles.push(this._rule);
+    this._children.map((child) => child.render(allStyles));
+  }
+
+  static createStyles(item) {
     const styles = {};
     const children = [];
 
@@ -53,12 +58,12 @@ class Selector {
     return {styles, children};
   }
 
-  createChildren(children) {
+  _createChildren(children) {
     return children.map(({prop, item}) => new Selector(this, prop, item));
   }
 
-  createRule(parentSelector, name, styles, isMediaQuery) {
-    const open = this.createSelector(parentSelector, name);
+  _createRule(parentSelector, name, styles, isMediaQuery) {
+    const open = this._createSelector(parentSelector, name);
     const close = isMediaQuery ? "} }" : "}";
     const markup = createMarkupForStyles(styles);
     const rule = `${open} { ${markup} ${close}`;
@@ -67,12 +72,7 @@ class Selector {
     this._rule = rule;
   }
 
-  render(allStyles) {
-    allStyles.push(this._rule);
-    this._children.map((child) => child.render(allStyles));
-  }
-
-  createSelector(parentSelector = "", selector) {
+  _createSelector(parentSelector = "", selector) {
     if (this._isMediaQuery) {
       return `${selector} { ${parentSelector.trimLeft()}`;
     }
