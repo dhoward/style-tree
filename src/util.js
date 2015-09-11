@@ -41,6 +41,7 @@ const util = {
   },
 
   createClassName(styles) {
+    // TODO: hash classes based on name, content, and nesting so collisions will be irrelevant
     const styleObject = util.sortObject(styles);
     const styleString = util.stringifyObject(styleObject);
     return hash.unique(styleString);

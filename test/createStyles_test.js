@@ -2,6 +2,7 @@ var chai = require("chai");
 var Selector = require("../src/selector");
 var lib = require("../src/main");
 var {styles, badStyle, badStyle2} = require("./styles/css");
+var classNames = require("./styles/classNames");
 var createStyles = lib.createStyles;
 chai.should();
 
@@ -30,6 +31,7 @@ describe('createStyles', function() {
       var style = styles.firstClass;
       var isSelector = style instanceof Selector;
       isSelector.should.be.true;
+      style.toString().should.equal(classNames.firstClass);
       style.readable.should.equal("firstClass");
     });
   });
@@ -39,6 +41,7 @@ describe('createStyles', function() {
       var style = styles.firstClass.secondClass;
       var isSelector = style instanceof Selector;
       isSelector.should.be.true;
+      style.toString().should.equal(classNames.secondClass);
       style.readable.should.equal("secondClass");
     });
   });
@@ -48,6 +51,7 @@ describe('createStyles', function() {
       var style = styles.firstClass.firstClassModifier;
       var isSelector = style instanceof Selector;
       isSelector.should.be.true;
+      style.toString().should.equal(`${classNames.firstClass} ${classNames.firstClassModifier}`);
       style.readable.should.equal("firstClassModifier");
     });
   });
@@ -61,11 +65,18 @@ describe('createStyles', function() {
       });
     });
 
+    it('should retain the original style object', function () {
+      var firstClass = styles.firstClass;
+      firstClass.should.be.an.instanceOf(Selector);
+      firstClass.toString().should.equal(classNames.firstClass);
+      firstClass.readable.should.equal("firstClass");
+    });
+
     it('should add the new styles to the original style object', function () {
-      var firstClassSelector = styles.firstClass instanceof Selector;
-      var anotherClassSelector = styles.anotherClass instanceof Selector;
-      firstClassSelector.should.be.true;
-      anotherClassSelector.should.be.true;
+      var anotherClass = styles.anotherClass;
+      anotherClass.should.be.an.instanceOf(Selector)
+      anotherClass.toString().should.equal(classNames.anotherClass);
+      anotherClass.readable.should.equal("anotherClass");
     });
   });
 });

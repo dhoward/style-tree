@@ -18,11 +18,13 @@ class Selector {
     this.readable = name;
     this.andReadable = `${name} ${this._hash}`;
 
+    this._parent = parent;
     parent[name] = this;
   }
 
   toString() {
-    return this._hash;
+    const base = this._isModifier ? `${this._parent.toString()} ` : "";
+    return `${base}${this._hash}`;
   }
 
   createStylesAndChildren(item) {
