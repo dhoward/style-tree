@@ -9,7 +9,8 @@ class Selector {
     this._name = property;
     this._styles = {};
     this._children = [];
-    this._hash = this.createStylesAndChildren(item);
+    this._styles = this.createStylesAndChildren(item);
+    this._hash = util.createClassName(this._styles);
 
     this._isModifier = util.isModifier(property);
     this._isPseudo = util.isPseudoSelector(property);
@@ -28,6 +29,8 @@ class Selector {
   }
 
   createStylesAndChildren(item) {
+    let styles = {};
+
     for (var prop in item) {
       if (!item.hasOwnProperty(prop)) {
         continue;
@@ -38,14 +41,14 @@ class Selector {
       }
 
       if (typeof item[prop] !== "object") {
-        this._styles[prop] = item[prop];
+        styles[prop] = item[prop];
         continue;
       }
 
       this._children.push(new Selector(this, prop, item));
     }
 
-    return util.createClassName(this._styles);
+    return styles;
   }
 
   render(allStyles, pre) {
