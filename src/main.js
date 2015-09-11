@@ -21,7 +21,7 @@ const renderStyles = (styleObj) => {
   const renderedStyles = [];
   for (var prop in allStyles) {
     const style = allStyles[prop];
-    style.render(renderedStyles, "", prop, style);
+    style.render(renderedStyles);
   }
 
   return renderedStyles.join(" ");

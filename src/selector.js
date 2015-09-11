@@ -9,7 +9,7 @@ class Selector {
     this._name = property;
     this._styles = {};
     this._children = [];
-    this._styles = this.createStylesAndChildren(item);
+    this._styles = this.createStyles(item);
     this._hash = util.createClassName(this._styles);
 
     this._isModifier = util.isModifier(property);
@@ -18,6 +18,9 @@ class Selector {
 
     this.readable = name;
     this.andReadable = `${name} ${this._hash}`;
+
+    this.createRule(parent._selector, this._name, this._styles, this._isMediaQuery);
+    this.createChildren();
 
     this._parent = parent;
     parent[name] = this;
@@ -28,7 +31,7 @@ class Selector {
     return `${base}${this._hash}`;
   }
 
-  createStylesAndChildren(item) {
+  createStyles(item) {
     let styles = {};
 
     for (var prop in item) {
@@ -45,37 +48,44 @@ class Selector {
         continue;
       }
 
-      this._children.push(new Selector(this, prop, item));
+      this._children.push({prop, item});
     }
 
     return styles;
   }
 
-  render(allStyles, pre) {
-    const [selector, close] = this.createSelector(pre, this._name, this._styles);
-    const open = `${selector} {`.trimLeft();
-    const markup = createMarkupForStyles(this._styles);
-    const rule = `${open} ${markup} ${close}`;
-
-    allStyles.push(rule);
-    this._children.map((child) => child.render(allStyles, selector));
-
-    return allStyles;
+  createChildren() {
+    this._children = this._children.map(({prop, item}) => {
+      return new Selector(this, prop, item);
+    });
   }
 
-  createSelector(prefix, selector, styleObj) {
+  createRule(parentSelector, name, styles, isMediaQuery) {
+    const open = this.createSelector(parentSelector, name);
+    const close = isMediaQuery ? "} }" : "}";
+    const markup = createMarkupForStyles(styles);
+    const rule = `${open} { ${markup} ${close}`;
+
+    this._selector = open;
+    this._rule = rule;
+  }
+
+  render(allStyles) {
+    allStyles.push(this._rule);
+    this._children.map((child) => child.render(allStyles));
+  }
+
+  createSelector(parentSelector = "", selector) {
     if (this._isMediaQuery) {
-      return [`${selector} { ${prefix.trimLeft()}`, `} }`];
+      return `${selector} { ${parentSelector.trimLeft()}`;
     }
 
     if(this._isPseudo) {
-      return [`${prefix}${selector}`, `}`];
+      return `${parentSelector}${selector}`;
     }
 
-    const classHash = util.createClassName(styleObj);
-    const separator = this._isModifier ? "" : " ";
-
-    return [`${prefix}${separator}.${classHash}`, `}`];
+    const separator = this._isModifier || !parentSelector.length ? "" : " ";
+    return `${parentSelector}${separator}.${this._hash}`;
   }
 }
 
