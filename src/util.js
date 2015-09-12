@@ -40,11 +40,11 @@ const util = {
     return str;
   },
 
-  createClassName(styles) {
-    // TODO: hash classes based on name, content, and nesting so collisions will be irrelevant
+  createClassName(parentSelector, property, styles) {
     const styleObject = util.sortObject(styles);
     const styleString = util.stringifyObject(styleObject);
-    return hash.unique(styleString);
+    const hashString = hash.unique(`${parentSelector}${property}${styleString}`);
+    return `_${hashString}`;
   }
 
 }

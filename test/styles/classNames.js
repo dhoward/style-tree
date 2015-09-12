@@ -1,10 +1,10 @@
 import hash from 'shorthash';
 
-const firstClass = "sLEHb";
-const firstClassModifier = "Z1glYGA";
-const thingInsideIt = "ZRrWwb";
-const secondClass = "ZRrWwb";
-const anotherClass = "Z1TB2Sp";
+const firstClass = "_JJry6";
+const firstClassModifier = "_1fJFSn";
+const thingInsideIt = "_1Axojj";
+const secondClass = "_ZVMW8s";
+const anotherClass = "_81Isw";
 
 export {
   firstClass,

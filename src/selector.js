@@ -8,7 +8,7 @@ class Selector {
     const {styles, children} = Selector.createStyles(item);
 
     this._name = property;
-    this._hash = util.createClassName(styles);
+    this._hash = util.createClassName(parent._selector, property, styles);
 
     this._isModifier = util.isModifier(property);
     this._isPseudo = util.isPseudoSelector(property);
