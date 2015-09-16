@@ -8,7 +8,7 @@ chai.should();
 describe("Selector", function() {
   describe("constructor", function() {
     before(function(){
-      sel = new Selector({}, "firstClass", styles);
+      sel = new Selector(null, "firstClass", styles, true);
     })
 
     it("should create a Selector object", function () {

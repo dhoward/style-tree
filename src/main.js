@@ -1,16 +1,14 @@
 import Selector from "./selector"
 import util from "./util"
 
-const allStyles = {};
+const allStyles = [];
 
 const createStyles = (styleObj) => {
-  // TODO: return only the styles created during this call, to avoid collisions
-  // store global (top-level) styles can be kept in an array
-
   const currentStyles = {}
 
   for (var property in styleObj) {
-    const selector = new Selector(allStyles, property, styleObj);
+    const selector = new Selector(null, property, styleObj);
+    allStyles.push(selector);
     currentStyles[property] = selector;
   }
 
@@ -23,9 +21,10 @@ const renderStyles = (styleObj) => {
   }
 
   const renderedStyles = [];
-  for (var prop in allStyles) {
-    const style = allStyles[prop];
-    style.render(renderedStyles);
+  const numStyles = allStyles.length;
+
+  for (var i=0; i < numStyles; i++) {
+    allStyles[i].render(renderedStyles);
   }
 
   return renderedStyles.join(" ");

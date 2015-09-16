@@ -5,10 +5,11 @@ class Selector {
   constructor(parent, property, object) {
     const name = util.isModifier(property) ? property.substr(1, property.length-1) : property;
     const item = object[property];
+    const parentSelector = parent ? parent._selector : "";
     const {styles, children} = Selector.createStyles(item);
 
     this._name = property;
-    this._hash = util.createClassName(parent._selector, property, styles);
+    this._hash = util.createClassName(parentSelector, property, styles);
 
     this._isModifier = util.isModifier(property);
     this._isPseudo = util.isPseudoSelector(property);
@@ -17,11 +18,14 @@ class Selector {
     this.readable = name;
     this.andReadable = `${name} ${this._hash}`;
 
-    this._createRule(parent._selector, this._name, styles, this._isMediaQuery);
+    this._createRule(parentSelector, this._name, styles, this._isMediaQuery);
 
     this._children = this._createChildren(children);
-    this._parent = parent;
-    parent[name] = this;
+
+    if (parent) {
+      this._parent = parent;
+      parent[name] = this;
+    }
   }
 
   toString() {
