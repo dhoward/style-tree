@@ -6,11 +6,15 @@ const allStyles = {};
 const createStyles = (styleObj) => {
   // TODO: return only the styles created during this call, to avoid collisions
   // store global (top-level) styles can be kept in an array
+
+  const currentStyles = {}
+
   for (var property in styleObj) {
-    new Selector(allStyles, property, styleObj);
+    const selector = new Selector(allStyles, property, styleObj);
+    currentStyles[property] = selector;
   }
 
-  return allStyles;
+  return currentStyles;
 }
 
 const renderStyles = (styleObj) => {

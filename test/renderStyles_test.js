@@ -2,6 +2,7 @@ var chai = require("chai");
 var lib = require("../src/main");
 var {styles} = require("./styles/css");
 var classNames = require("./styles/classNames");
+var createStyles = lib.createStyles;
 var renderStyles = lib.renderStyles;
 chai.should();
 
@@ -51,6 +52,26 @@ describe('renderStyles', function() {
 
     it('should remain numbers where appropriate', function () {
       styles.should.contain("line-height:2;");
+    });
+  });
+
+  context('after multiple calls to createStyles', function() {
+    before(function() {
+      createStyles({
+        anotherClass: {
+          height: 300
+        }
+      });
+
+      styles = renderStyles();
+    });
+
+    it('should return all created styles', function () {
+      var originalStyle = `.${classNames.firstClass} { height:100px;line-height:2;width:200px; }`;
+      var newStyle = `.${classNames.anotherClass} { height:300px; }`;
+
+      styles.should.contain(originalStyle);
+      styles.should.contain(newStyle);
     });
   });
 });

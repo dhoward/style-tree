@@ -1,4 +1,5 @@
 var chai = require("chai");
+var expect = require('chai').expect;
 var Selector = require("../src/selector");
 var lib = require("../src/main");
 var {styles, badStyle, badStyle2} = require("./styles/css");
@@ -58,21 +59,17 @@ describe('createStyles', function() {
 
   describe('subsequent calls to createStyles', function() {
     before(function() {
-      var styles = createStyles({
+      styles = createStyles({
         anotherClass: {
-          height: 100
+          height: 300
         }
       });
     });
 
-    it('should retain the original style object', function () {
+    it('should retain only the newly created styles', function () {
       var firstClass = styles.firstClass;
-      firstClass.should.be.an.instanceOf(Selector);
-      firstClass.toString().should.equal(classNames.firstClass);
-      firstClass.readable.should.equal("firstClass");
-    });
+      expect(firstClass).to.not.exist;
 
-    it('should add the new styles to the original style object', function () {
       var anotherClass = styles.anotherClass;
       anotherClass.should.be.an.instanceOf(Selector)
       anotherClass.toString().should.equal(classNames.anotherClass);
