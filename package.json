@@ -2,7 +2,7 @@
   "name": "style-tree",
   "author": "Daniel Howard",
   "version": "0.1.0",
-  "description": "JSON stylesheets",
+  "description": "JSON stylesheets for React",
   "main": "lib/main.js",
   "scripts": {
     "compile": "babel -d lib/ src/",
