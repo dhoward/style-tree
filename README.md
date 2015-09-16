@@ -19,7 +19,7 @@ const styles = StyleTree.createStyles({
 
 When you want to output css, call renderStyles:
 ```
-StyleTree.renderStyles() //.sLEHb { height:100px;width:200px; }
+StyleTree.renderStyles() //._sLEHb { height:100px;width:200px; }
 ```
 
 Notice that StyleTree generates a hashed value of the class name for you. To use it in your html, access it as you would in the object that you originally created:
@@ -35,7 +35,7 @@ StyleTree.createStyles({
   outerClass: {
     height: 100,
     width: 200,
-    
+
     innerClass: {
       backgroundColor: "green",
       color: "red"
@@ -45,12 +45,12 @@ StyleTree.createStyles({
 ```
 Outputs this css:
 ```
-.sLEHb { height:100px;width:200px; }
-.sLEHb .Z1glYGA { backgroundColor:"green";color:"red" }
+._sLEHb { height:100px;width:200px; }
+._sLEHb ._Z1glYGA { backgroundColor:"green";color:"red" }
 ```
 You can nest as far as you want, and access the classes in your html the same as before:
 ```
-<div class={styles.outerClass.innerClass}></div> //<div class="Z1glYGA"></div>
+<div class={styles.outerClass.innerClass}></div> //<div class="_Z1glYGA"></div>
 ```
 
 ###Sibling classes (modifiers)
@@ -60,11 +60,11 @@ To hoist a class up one level, prefix it with a `$`. This allows you to nest mod
 StyleTree.createStyles({
   someClass: {
     height: 100,
-    
+
     $active: {
       color: "red"
     },
-    
+
     $inactive: {
       color: "blue"
     }
@@ -73,13 +73,13 @@ StyleTree.createStyles({
 ```
 Outputs this css:
 ```
-.sLEHb { height:100px; }
-.sLEHb.Z1glYGA { color:"red" }
-.sLEHb.ZRrWwbD { color:"blue" }
+._sLEHb { height:100px; }
+._sLEHb._Z1glYGA { color:"red" }
+._sLEHb._ZRrWwbD { color:"blue" }
 ```
 In your html, you only need to call the modifier and it will output the base class as well:
 ```
-<div class={styles.someClass.active}></div> //<div class="sLEHb Z1glYGA"></div>
+<div class={styles.someClass.active}></div> //<div class="_sLEHb _Z1glYGA"></div>
 ```
 
 ###Pseudo selectors
@@ -87,15 +87,15 @@ In your html, you only need to call the modifier and it will output the base cla
 StyleTree.createStyles({
   someClass: {
     height: 100,
-    
+
     ":hover": {
       height: 200
     }
   }
 };
 
-.sLEHb { height:100px; }
-.sLEHb:hover { height:200px }
+._sLEHb { height:100px; }
+._sLEHb:hover { height:200px }
 ```
 
 ###Media queries
@@ -105,15 +105,15 @@ Should be nested inside the element they are to affect:
 StyleTree.createStyles({
   someClass: {
     height: 100,
-    
+
     "@media (max-width: 300px)": {
       height: 200
     }
   }
 };
 
-.sLEHb { height:100px; }
-@media (max-width: 300px) { .sLEHb { height:200px } }
+._sLEHb { height:100px; }
+@media (max-width: 300px) { ._sLEHb { height:200px } }
 ```
 
 ##Utility properties
@@ -123,6 +123,6 @@ style.someClass.readable // "someClass"
 ```
 or `andReadable` to output both at once:
 ```
-style.someClass.andReadable // "someClass sLEHb"
+style.someClass.andReadable // "someClass _sLEHb"
 ```
 Note that the readable class name will NOT style the element; it is included only to be used as a javascript hook or for some other purpose.
