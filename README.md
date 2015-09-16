@@ -116,7 +116,7 @@ StyleTree.createStyles({
 @media (max-width: 300px) { ._sLEHb { height:200px } }
 ```
 
-##Utility properties
+## Utility properties
 Sometimes you may want to use the original names you created for your css classes. To do that grab the `readable` property from the class:
 ```
 style.someClass.readable // "someClass"
