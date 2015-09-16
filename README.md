@@ -2,7 +2,7 @@
 
 Write your styles in JSON while retaining all the advantages of handwritten css.
 
-##Usage
+## Usage
 
 To create a style, pass a JSON object into createStyles:
 
@@ -27,7 +27,7 @@ Notice that StyleTree generates a hashed value of the class name for you. To use
 <div class={styles.firstClass}></div> //<div class="sLEHb"></div>
 ```
 
-###Nested classes
+### Nested classes
 
 StyleTree also supports nested classes. For example this JSON:
 ```
@@ -53,7 +53,7 @@ You can nest as far as you want, and access the classes in your html the same as
 <div class={styles.outerClass.innerClass}></div> //<div class="_Z1glYGA"></div>
 ```
 
-###Sibling classes (modifiers)
+### Sibling classes (modifiers)
 
 To hoist a class up one level, prefix it with a `$`. This allows you to nest modifiers inside the class they should affect:
 ```
@@ -82,7 +82,7 @@ In your html, you only need to call the modifier and it will output the base cla
 <div class={styles.someClass.active}></div> //<div class="_sLEHb _Z1glYGA"></div>
 ```
 
-###Pseudo selectors
+### Pseudo selectors
 ```
 StyleTree.createStyles({
   someClass: {
@@ -98,7 +98,7 @@ StyleTree.createStyles({
 ._sLEHb:hover { height:200px }
 ```
 
-###Media queries
+### Media queries
 
 Should be nested inside the element they are to affect:
 ```
