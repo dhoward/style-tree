@@ -8,7 +8,7 @@ To create a style, pass a JSON object into createStyles:
 
 ```
 import StyleTree from "style-tree";
-
+c
 const styles = StyleTree.createStyles({
   someClass: {
     height: 100,
@@ -24,7 +24,7 @@ StyleTree.renderStyles() //._sLEHb { height:100px;width:200px; }
 
 Notice that StyleTree generates a hashed value of the class name for you. To use it in your html, access it as you would in the object that you originally created:
 ```
-<div class={styles.firstClass}></div> //<div class="sLEHb"></div>
+<div className={styles.firstClass}></div> //<div class="sLEHb"></div>
 ```
 
 ### Nested classes
@@ -50,7 +50,7 @@ Outputs this css:
 ```
 You can nest as far as you want, and access the classes in your html the same as before:
 ```
-<div class={styles.outerClass.innerClass}></div> //<div class="_Z1glYGA"></div>
+<div className={styles.outerClass.innerClass}></div> //<div class="_Z1glYGA"></div>
 ```
 
 ### Sibling classes (modifiers)
@@ -79,7 +79,7 @@ Outputs this css:
 ```
 In your html, you only need to call the modifier and it will output the base class as well:
 ```
-<div class={styles.someClass.active}></div> //<div class="_sLEHb _Z1glYGA"></div>
+<div className={styles.someClass.active}></div> //<div class="_sLEHb _Z1glYGA"></div>
 ```
 
 ### Pseudo selectors
