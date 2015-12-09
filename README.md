@@ -8,7 +8,7 @@ To create a style, pass a JSON object into createStyles:
 
 ```
 import StyleTree from "style-tree";
-c
+
 const styles = StyleTree.createStyles({
   someClass: {
     height: 100,
