@@ -90,12 +90,17 @@ StyleTree.createStyles({
 
     ":hover": {
       height: 200
+    },
+    
+    ":first-child": {
+      color: "red"
     }
   }
 };
 
 ._sLEHb { height:100px; }
 ._sLEHb:hover { height:200px }
+._sLEHb:first-child { color:"red" }
 ```
 
 ### Media queries
